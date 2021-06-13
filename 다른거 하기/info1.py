@@ -1,5 +1,7 @@
 import pygame
 import os
+import random
+from game import *
 
 pygame.init()
 # 화면 크기 설정
@@ -61,12 +63,6 @@ class Weapon(pygame.sprite.Sprite):
         self.y_pos = 480
 
 
-class Coin(pygame.sprite.Sprite):
-    def __init__(self, image):
-        self.image = image
-        self.size = self.image.get_rect().size
-
-
 weapon = Weapon(pygame.image.load(os.path.join(
     image_path, "weapon.svg")).convert_alpha())
 
@@ -106,6 +102,7 @@ balls.append({
 # Font 정의
 game_font = pygame.font.SysFont("arial", 30)
 total_time = 100
+elapsed_time = (pygame.time.get_ticks() - start_ticks) / 1000  # ms -> s
 start_ticks = pygame.time.get_ticks()  # 시작 시간 정의
 
 # 게임 종료 메시지

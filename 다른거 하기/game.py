@@ -1,8 +1,22 @@
+import random
 import pygame
 from info1 import *
 ##############################################################
 # 기본 초기화 (반드시 해야 하는 것들)
 pygame.init()
+
+
+class Coin(pygame.sprite.Sprite):
+    def __init__(self, image):
+        self.image = image
+        self.size = self.image.get_rect().size
+        self.speed = 10
+        self.x_pos = random.randint(0, 610)
+        self.y_pos = 0
+
+
+coin = Coin(pygame.image.load(os.path.join(
+    image_path, "coin.svg")).convert_alpha())
 
 mainRun = True
 howToRun = False
@@ -99,6 +113,23 @@ while running:
     # 천장에 닿은 무기 없애기
     weapons = [[w[0], w[1]] for w in weapons if w[1] > 0]
 
+    coins = []
+    randomSec = []
+
+    for i in range(15):
+        randomSec.append(random.randint(1, 99))
+
+    randomSec.sort()
+    randomSec.reverse()
+
+    for i in range(15):
+        if randomSec[i] == total_time - elapsed_time:
+            coins.append(Coin(coin))
+
+    # 코인
+    coins = [[c[0], c[1] + coin.speed] for c in coins]
+    coins = [[c[0], c[1]] for c in coins if c[1] < 430]
+
     # 공 위치 정의
     for ball_idx, ball_val in enumerate(balls):
         ball_pos_x = ball_val["pos_x"]
@@ -130,6 +161,8 @@ while running:
     character.rect.left = character.x_pos
     character.rect.top = character.y_pos
 
+    # if pygame.sprite.collide_rect(character, coin):
+
     for ball_idx, ball_val in enumerate(balls):
         ball_pos_x = ball_val["pos_x"]
         ball_pos_y = ball_val["pos_y"]
@@ -144,13 +177,6 @@ while running:
         if character.rect.colliderect(ball_rect):
             running = False
             break
-
-        # if(pygame.sprite.collide_rect(character.rect, ball_rect)):
-        #     running = False
-        #     break
-        # if(pygame.sprite.collide_mask(ball_rect, character.rect)):
-        #     running = False
-        #     break
 
         # 공과 무기들 충돌 처리
         for weapon.idx, weapon.val in enumerate(weapons):
