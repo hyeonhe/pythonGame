@@ -1,22 +1,11 @@
 import random
 import pygame
+import os
 from info1 import *
+from money import *
 ##############################################################
 # 기본 초기화 (반드시 해야 하는 것들)
 pygame.init()
-
-
-class Coin(pygame.sprite.Sprite):
-    def __init__(self, image):
-        self.image = image
-        self.size = self.image.get_rect().size
-        self.speed = 10
-        self.x_pos = random.randint(0, 610)
-        self.y_pos = 0
-
-
-coin = Coin(pygame.image.load(os.path.join(
-    image_path, "coin.svg")).convert_alpha())
 
 mainRun = True
 howToRun = False
@@ -105,6 +94,13 @@ while running:
     elif character.x_pos > screen_width - character.width:
         character.x_pos = screen_width - character.width
 
+    from info1 import coin
+    coin.y_pos += coin.speed
+
+    if coin.y_pos > screen_height - stage_height - coin.height:
+        coin.y_pos = 0
+        coin.x_pos = random.randint(0, screen_width - coin.width)
+
     # 무기 위치 조정
     # 100, 200 -> 180, 160, 140, ...
     # 500, 200 -> 180, 160, 140, ...
@@ -113,22 +109,23 @@ while running:
     # 천장에 닿은 무기 없애기
     weapons = [[w[0], w[1]] for w in weapons if w[1] > 0]
 
-    coins = []
-    randomSec = []
+    # coins = []
+    # randomSec = []
 
-    for i in range(15):
-        randomSec.append(random.randint(1, 99))
+    # for i in range(15):
+    #     randomSec.append(random.randint(1, 99))
 
-    randomSec.sort()
-    randomSec.reverse()
+    # randomSec.sort()
+    # randomSec.reverse()
 
-    for i in range(15):
-        if randomSec[i] == total_time - elapsed_time:
-            coins.append(Coin(coin))
+    # for i in range(15):
+    #     if randomSec[i] == total_time - elapsed_time:
+    #         coins.append(coin)
+    #         screen.blit(coin.image, coin.x_pos, coin.y_pos)
 
     # 코인
-    coins = [[c[0], c[1] + coin.speed] for c in coins]
-    coins = [[c[0], c[1]] for c in coins if c[1] < 430]
+    # coins = [[c[0], c[1] + coin.speed] for c in coins]
+    # coins = [[c[0], c[1]] for c in coins if c[1] < 430]
 
     # 공 위치 정의
     for ball_idx, ball_val in enumerate(balls):
@@ -275,6 +272,7 @@ while running:
 
     screen.blit(stage, (0, screen_height - stage_height))
     screen.blit(character.image, (character.x_pos, character.y_pos))
+    screen.blit(coin.image, (coin.x_pos, coin.y_pos))
 
     # 경과 시간 계산
     elapsed_time = (pygame.time.get_ticks() - start_ticks) / 1000  # ms -> s

@@ -1,7 +1,7 @@
 import pygame
 import os
 import random
-from game import *
+# from game import *
 
 pygame.init()
 # 화면 크기 설정
@@ -27,6 +27,7 @@ background = pygame.image.load(os.path.join(image_path, "background.svg"))
 stage = pygame.image.load(os.path.join(image_path, "stage.svg"))
 stage_size = stage.get_rect().size
 stage_height = stage_size[1]  # 스테이지의 높이 위에 캐릭터를 두기 위해 사용
+
 
 # 캐릭터 만들기
 
@@ -102,8 +103,8 @@ balls.append({
 # Font 정의
 game_font = pygame.font.SysFont("arial", 30)
 total_time = 100
-elapsed_time = (pygame.time.get_ticks() - start_ticks) / 1000  # ms -> s
 start_ticks = pygame.time.get_ticks()  # 시작 시간 정의
+elapsed_time = (pygame.time.get_ticks() - start_ticks) / 1000  # ms -> s
 
 # 게임 종료 메시지
 # Time Over(시간 초과 실패)
