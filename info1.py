@@ -31,7 +31,6 @@ stage_height = stage_size[1]  # 스테이지의 높이 위에 캐릭터를 두�
 
 class Character(pygame.sprite.Sprite):
     def __init__(self, image):
-        pygame.sprite.Sprite.__init__(self)
         self.image = image
         self.size = image.get_rect().size
         self.width = self.size[0]
@@ -51,7 +50,6 @@ character = Character(pygame.image.load(
 
 class Weapon(pygame.sprite.Sprite):
     def __init__(self, image):
-        super().__init__()
         self.image = image
         self.size = self.image.get_rect().size
         self.width = self.size[0]
@@ -74,12 +72,6 @@ weapons = []
 ball_to_remove = -1
 
 # 공 만들기 (4개 크기에 대해 따로 처리)
-# ball_images = [
-#     pygame.image.load(os.path.join(image_path, "Ellipse 1.svg")),
-#     pygame.image.load(os.path.join(image_path, "Ellipse 2.svg")),
-#     pygame.image.load(os.path.join(image_path, "Ellipse 3.svg")),
-#     pygame.image.load(os.path.join(image_path, "Ellipse 4.svg"))]
-
 ball_images = [
     pygame.image.load(os.path.join(
         image_path, "Ellipse 1.svg")).convert_alpha(),
@@ -88,21 +80,6 @@ ball_images = [
     pygame.image.load(os.path.join(
         image_path, "Ellipse 3.svg")).convert_alpha(),
     pygame.image.load(os.path.join(image_path, "Ellipse 4.svg")).convert_alpha()]
-
-
-class Ball(pygame.sprite.Sprite):
-    def __init__(self, image, position):
-        super().__init__()
-        self.image = image
-        self.rect = image.get_rect()
-
-
-# 충돌처리 어떻게 해보려고 추가
-# ball_images[0].mask = pygame.mask.from_surface(ball_images[0].image)
-# ball_images[1].mask = pygame.mask.from_surface(ball_images[1].image)
-# ball_images[2].mask = pygame.mask.from_surface(ball_images[2].image)
-# ball_images[3].mask = pygame.mask.from_surface(ball_images[3].image)
-
 
 # 공 크기에 따른 최초 스피드
 ball_speed_y = [-18, -15, -12, -9]  # index 0, 1, 2, 3 에 해당하는 값
@@ -131,7 +108,8 @@ start_ticks = pygame.time.get_ticks()  # 시작 시간 정의
 # Game Over (캐릭터 공에 맞음, 실패)
 game_result = "Game Over"
 
-main = pygame.image.load(os.path.join(image_path, "main.svg"))
+main = pygame.image.load(os.path.join(image_path, "main.jpg"))
+how = pygame.image.load(os.path.join(image_path, "howTo.svg"))
 
 score_int = 0  # 실질적점수
 
@@ -140,5 +118,7 @@ score_int = 0  # 실질적점수
 pygame.mixer.music.load(os.path.join('Bio Unit - Orbit.mp3'))
 # 출처: https://www.soundeffectsplus.com/product/balloon-explode-01/#google_vignette
 ballon = pygame.mixer.Sound(os.path.join('ballon.mp3'))
-pygame.mixer.music.set_volume(1)
+pygame.mixer.music.set_volume(0.5)
 pygame.mixer.music.play(loops=-1)
+# 출처: https://youtubelab.tistory.com/29
+coinget = pygame.mixer.Sound(os.path.join('coin.wav'))

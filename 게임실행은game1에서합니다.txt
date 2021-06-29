@@ -1,0 +1,3 @@
+con.py 파일은 coin class가 있고
+info1.py 파일은 어려 변수들
+game1.py 파일에서 게임 실행을 합니다.
