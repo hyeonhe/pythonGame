@@ -17,6 +17,7 @@ clock = pygame.time.Clock()
 # 1. 사용자 게임 초기화 (배경 화면, 게임 이미지, 좌표, 속도, 폰트 등)
 current_path = os.path.dirname(__file__)  # 현재 파일의 위치 반환
 image_path = os.path.join(current_path, "images")  # images 폴더 위치 반환
+music_path = os.path.join(current_path, "musics")  # musics 폴더 위치 반환
 
 # 배경 만들기
 background = pygame.image.load(os.path.join(image_path, "background.svg"))
@@ -115,10 +116,10 @@ score_int = 0  # 실질적점수
 
 # 음악
 # 출처: https://freemusicarchive.org/home
-pygame.mixer.music.load(os.path.join('Bio Unit - Orbit.mp3'))
+pygame.mixer.music.load(os.path.join(music_path, 'Bio Unit - Orbit.mp3'))
 # 출처: https://www.soundeffectsplus.com/product/balloon-explode-01/#google_vignette
-ballon = pygame.mixer.Sound(os.path.join('ballon.mp3'))
+ballon = pygame.mixer.Sound(os.path.join(music_path, 'ballon.mp3'))
 pygame.mixer.music.set_volume(0.5)
 pygame.mixer.music.play(loops=-1)
 # 출처: https://youtubelab.tistory.com/29
-coinget = pygame.mixer.Sound(os.path.join('coin.wav'))
+coinget = pygame.mixer.Sound(os.path.join(music_path, 'coin.wav'))
